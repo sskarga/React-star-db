@@ -1,52 +1,60 @@
 .spinner {
-    margin: auto;
+  margin: 0px auto;
 }
 
 @keyframes lds-blocks {
-    0% {
-      background: #00bc8c; /* 545454 */
-    }
-    12.5% {
-      background: #00bc8c;
-    }
-    12.625% {
-      background: #f7f7f7;
-    }
-    100% {
-      background: #f7f7f7;
-    }
-  }
-  @-webkit-keyframes lds-blocks {
-    0% {
-      background: #00bc8c;
-    }
-    12.5% {
-      background: #00bc8c;
-    }
-    12.625% {
-      background: #f7f7f7;
-    }
-    100% {
-      background: #f7f7f7;
-    }
+  0% {
+    background: #00bc8c;
+    /* 545454 */
   }
 
-  .lds-blocks {
-    position: relative;
+  12.5% {
+    background: #00bc8c;
   }
 
-  .lds-blocks div {
-    position: absolute;
-    width: 40px;
-    height: 40px;
+  12.625% {
     background: #f7f7f7;
-    -webkit-animation: lds-blocks 1s linear infinite;
-    animation: lds-blocks 1s linear infinite;
   }
 
-  .lds-blocks {
-    width: 99px !important;
-    height: 99px !important;
-    -webkit-transform: translate(-49.5px, -49.5px) scale(0.495) translate(49.5px, 49.5px);
-    transform: translate(-49.5px, -49.5px) scale(0.495) translate(49.5px, 49.5px);
+  100% {
+    background: #f7f7f7;
   }
+}
+
+@-webkit-keyframes lds-blocks {
+  0% {
+    background: #00bc8c;
+  }
+
+  12.5% {
+    background: #00bc8c;
+  }
+
+  12.625% {
+    background: #f7f7f7;
+  }
+
+  100% {
+    background: #f7f7f7;
+  }
+}
+
+.lds-blocks {
+  position: relative;
+}
+
+.lds-blocks div {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: #f7f7f7;
+  -webkit-animation: lds-blocks 1s linear infinite;
+  animation: lds-blocks 1s linear infinite;
+}
+
+.lds-blocks {
+  width: 99px !important;
+  height: 99px !important;
+  -webkit-transform: translate(-49.5px, -49.5px) scale(0.495) translate(49.5px, 49.5px);
+  transform: translate(-49.5px, -49.5px) scale(0.495) translate(49.5px, 49.5px);
+}
