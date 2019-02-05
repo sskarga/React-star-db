@@ -46,13 +46,11 @@ export default class PersonDetails extends Component {
     const { person, loading } = this.state;
 
     const spinner = loading ? <Spinner /> : null;
-    const choise = !person ? <span>Choise person</span> : null;
     const conten = (person && !loading) ? <PersonView person={person} /> : null; 
     
     return (
       <div className="person-details card mt-0">
         {spinner}
-        {choise}
         {conten} 
       </div>
     )

@@ -10,17 +10,17 @@ export default class ItemList extends Component {
   swapiService = new SwapiService();
 
   state = {
-    peopleList: null,
+    itemList: null,
     loading: true,
     error: false,
   };
 
   onPeopleLoaded = (itemList) => {
     this.setState({
-      peopleList: itemList,
+      itemList,
       loading: false,
       error: false,
-    });
+    });''
   };
 
   onError = (err) => {
@@ -31,8 +31,8 @@ export default class ItemList extends Component {
   };
 
   componentDidMount() {
-    this.swapiService
-        .getAllPeople()
+    const { getItemData } = this.props;
+    getItemData()
         .then(this.onPeopleLoaded)
         .catch(this.onError);
   }
@@ -50,13 +50,13 @@ export default class ItemList extends Component {
   }
 
   render() {
-    const { peopleList, loading, error } = this.state;
+    const { itemList, loading, error } = this.state;
 
     const errorMsg = error ? <ErrorIndicator /> : null;
     const spinner = loading ? <Spinner /> : null;
 
     const hasData = !(loading || error);
-    const items = hasData ? this.renderItems(peopleList) : null;
+    const items = hasData ? this.renderItems(itemList) : null;
     
     return ( 
       <React.Fragment> 

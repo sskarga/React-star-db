@@ -2,50 +2,50 @@ import React, { Component } from 'react';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-import ItemList from '../item-list';
-import PersonDetails from '../person-details';
+import PeoplePage from '../people-page';
 import ErrorIndicator from '../error-indicator';
 
 import './app.css';
+import ItemList from '../item-list';
+import PersonDetails from '../person-details';
+import SwapiService from "../../service/swapi-service";
 
 export default class App extends Component {
 
-  state = {
-    personSelected: 5,
-    hasError: false,
-  }
+    swapiService = new SwapiService();
 
-  componentDidCatch() {
-    this.state({ hasError: true, });
-  }
-
-  onPersonSelected = (id) => {
-    this.setState({
-      personSelected: id,
-    })
-  };
-
-
-  render() {
-
-    if (this.state.hasError) {
-      return <ErrorIndicator />
+    state = {
+        hasError: false,
     }
 
-    return (
-      <div className="container">
-        <Header />
-        <RandomPlanet />
+    componentDidCatch() {
+        this.state({ hasError: true, });
+    }
 
-        <div className="row mb2">
-          <div className="col-md-6">
-            <ItemList onItemSelected={this.onPersonSelected}/>
-          </div>
-          <div className="col-md-6">
-            <PersonDetails personId={this.state.personSelected} />
-          </div>
-        </div>
-      </div>
-    );
+    render() {
+
+        if (this.state.hasError) {
+            return <ErrorIndicator />
+        }
+
+        return (
+            <div className="container">
+                <Header />
+                <RandomPlanet />
+                <PeoplePage />
+
+                <div className="row mb2">
+                    <div className="col-md-6">
+                        <ItemList
+                            onItemSelected={this.onPersonSelected}
+                            getItemData={this.swapiService.getAllStarShips}
+                        />
+                    </div>
+                    <div className="col-md-6">
+                        <PersonDetails personId={this.state.personSelected} />
+                    </div>
+                </div>
+            </div>
+        );
     };
 };
