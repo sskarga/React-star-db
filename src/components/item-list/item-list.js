@@ -1,46 +1,29 @@
 import React, { Component } from 'react';
-import SwapiService from '../../service/swapi-service';
 import Spinner from '../spinner';
-import ErrorIndicator from '../error-indicator';
-
 import './item-list.css';
 
 export default class ItemList extends Component {
 
-  swapiService = new SwapiService();
-
   state = {
     itemList: null,
-    loading: true,
-    error: false,
-  };
-
-  onPeopleLoaded = (itemList) => {
-    this.setState({
-      itemList,
-      loading: false,
-      error: false,
-    });
-  };
-
-  onError = (err) => {
-    this.setState({
-      loading: false,
-      error: true,
-    });
   };
 
   componentDidMount() {
-    const { getItemData } = this.props;
-    getItemData()
-        .then(this.onPeopleLoaded)
-        .catch(this.onError);
+
+    const { getData } = this.props;
+
+    getData()
+        .then((itemList) => {
+          this.setState({
+            itemList
+          });
+        });
   }
 
   renderItems(arr) {
     return arr.map((item) => {
       const { id } = item;
-      const label = this.props.renderItem(item);
+      const label = this.props.children(item);
 
       return (
       <li className="list-group-item"
@@ -53,22 +36,19 @@ export default class ItemList extends Component {
   }
 
   render() {
-    const { itemList, loading, error } = this.state;
+    const { itemList } = this.state;
 
-    const errorMsg = error ? <ErrorIndicator /> : null;
-    const spinner = loading ? <Spinner /> : null;
+    if (!itemList) {
+      return <Spinner />;
+    }
 
-    const hasData = !(loading || error);
-    const items = hasData ? this.renderItems(itemList) : null;
-    
+    const items = this.renderItems(itemList);
+
     return ( 
-      <React.Fragment> 
-        {spinner} 
-        {errorMsg}    
+
         <ul className="item-list list-group">
           {items}
         </ul>
-      </React.Fragment>
     );
   }
 }

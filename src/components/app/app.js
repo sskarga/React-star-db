@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 
 import Header from '../header';
-import RandomPlanet from '../random-planet';
-import PeoplePage from '../people-page';
 import ErrorIndicator from '../error-indicator';
-import ItemList from '../item-list';
-import PersonDetails from '../person-details';
 import SwapiService from "../../service/swapi-service";
 import Row from "../row";
 
+
 import './app.css';
+import ItemDetails, { Record } from "../item-details";
+
 
 
 export default class App extends Component {
@@ -30,25 +29,39 @@ export default class App extends Component {
             return <ErrorIndicator />
         }
 
-        const itemList = (
-            <ItemList
-                onItemSelected={this.onPersonSelected}
-                getItemData={this.swapiService.getAllStarShips}
-                renderItem={ (item) => (<span>{item.name} <button>!</button></span>) }
-            />
-        );
+        const { getPerson, getPersonImage,
+                getStarship, getStarshipImage } = this.swapiService;
 
         const personDetails = (
-            <PersonDetails personId={this.state.personSelected} />
+            <ItemDetails
+                getData={getPerson}
+                getImageUrl={getPersonImage}
+                itemId={3} >
+
+                <Record field="gender" label="Gender" />
+                <Record field="eyeColor" label="Eye Color" />
+
+            </ItemDetails>
         );
 
+        const starShipDetails = (
+            <ItemDetails
+                getData={getStarship}
+                getImageUrl={getStarshipImage}
+                itemId={5} >
+
+                <Record field="crew" label="Crew" />
+                <Record field="length" label="Length" />
+
+            </ItemDetails>
+        );
         return (
             <div className="container">
                 <Header />
-                <RandomPlanet />
-                <PeoplePage />
 
-                <Row left={itemList} right={personDetails}/>
+                <Row
+                    left={personDetails}
+                    right={starShipDetails} />
             </div>
         );
     };
